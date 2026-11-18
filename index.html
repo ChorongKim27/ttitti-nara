@@ -2392,6 +2392,7 @@ function startEat(id){
   if (kid.eat || kid.roast || !food[id]) return;
   const f = FOODS.find(x => x.id === id);
   food[id]--; kid.target = null; kid.goto = null; tapMark = null;
+  if (!kid.sitting) kid.heading = Math.atan2(camera.position.x - kid.x, camera.position.z - kid.z);
   kid.eat = { id, t: 0, dur: f.drink ? 2.2 : 2.8, drink: f.drink, bites: 0 };
   handFood.geometry = foodGeo(id); handFood.scale.setScalar(1); handFood.visible = true;
   kid.bubble = { text: f.line, t: kid.eat.dur };
