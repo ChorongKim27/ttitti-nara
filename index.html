@@ -3200,6 +3200,7 @@ document.getElementById('mpGo').addEventListener('click', () => {
   mpEl.hidden = true;
   try { history.replaceState(null, '', location.pathname + '?room=' + code); } catch (e) {}
   goBtn.click();
+  if (place === 'park'){ const a = Math.random() * TAU, d = 1.2 + Math.random() * 1.3; kid.x += Math.cos(a) * d; kid.z += Math.sin(a) * d * 0.6; }
   mpStart(code);
 });
 const mpMenu = document.getElementById('mpMenu');
