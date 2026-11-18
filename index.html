@@ -256,6 +256,28 @@ html, body {
 }
 .big-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #d94c84; }
 .big-btn:disabled { opacity: 0.6; }
+.soft-btn { font-family: var(--font-display); font-size: 19px; cursor: pointer; border: 2px solid #ffc2d9; border-radius: 999px; padding: 9px 22px; background: #fff; color: var(--berry); box-shadow: 0 3px 0 rgba(232, 83, 143, 0.18); }
+.soft-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 rgba(232, 83, 143, 0.18); }
+.soft-btn:focus-visible, .chip:focus-visible, .swatch:focus-visible, .mp-pill:focus-visible { outline: 3px solid var(--berry); outline-offset: 2px; }
+.card.mp-card { width: min(480px, 100%); max-height: calc(100vh - 40px); max-height: calc(100dvh - 40px); overflow-y: auto; text-align: left; align-items: stretch; gap: 12px; }
+.mp-card h2, .mp-card .big-btn, .mp-card .soft-btn { align-self: center; }
+.mp-note { font-size: 16px !important; color: #8a5a72; word-break: keep-all; }
+.mp-field { display: flex; flex-direction: column; gap: 6px; font-size: 17px; }
+.mp-field > span:first-child { color: var(--berry); }
+.mp-field input { font-family: var(--font-display); font-size: 20px; padding: 8px 14px; border-radius: 14px; border: 2px solid #ffc2d9; background: #fff; color: var(--ink); min-width: 0; }
+.mp-field input:focus { outline: 3px solid #ffd0e2; border-color: var(--blossom); }
+.code-row { display: flex; gap: 8px; align-items: center; }
+.code-row input { flex: 1; letter-spacing: 0.15em; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font-family: var(--font-display); font-size: 16px; cursor: pointer; border: 2px solid #ffd0e2; border-radius: 999px; padding: 6px 14px; background: #fff; color: var(--ink); }
+.chip.on { background: var(--blossom); border-color: #fff; color: #fff; box-shadow: 0 3px 0 #d94c84; }
+.swatch { width: 40px; height: 40px; border-radius: 50%; cursor: pointer; border: 3px solid #fff; background: var(--c); box-shadow: 0 0 0 2px #ffd0e2; }
+.swatch.on { box-shadow: 0 0 0 3px var(--berry); transform: scale(1.08); }
+.mp-pill { cursor: pointer; font-family: inherit; color: var(--ink); }
+.mp-pill .dot { width: 12px; height: 12px; border-radius: 50%; background: #5fc06b; box-shadow: 0 0 0 3px rgba(95, 192, 107, 0.25); }
+.mp-pill.off .dot { background: #f0a040; box-shadow: 0 0 0 3px rgba(240, 160, 64, 0.25); }
+.mp-pill[hidden] { display: none; }
+#start .card { max-height: calc(100vh - 32px); max-height: calc(100dvh - 32px); overflow-y: auto; }
 .how { list-style: none; margin: 4px 0 0; padding: 12px 16px; display: grid; gap: 6px;
   background: #fff0f6; border-radius: 18px; font-size: 16px; text-align: left; width: 100%; }
 .how li { display: flex; gap: 10px; align-items: baseline; }
@@ -301,6 +323,7 @@ html, body {
       <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-8-4.8-8-10.6A4.3 4.3 0 0 1 12 7.4a4.3 4.3 0 0 1 8 2.5c0 5.8-8 10.6-8 10.6z" fill="#ff6f9f" stroke="#fff" stroke-width="1.5"/></svg>
       <span>행복 만점 <b id="happyCnt">0</b> / <span id="totalH">24</span></span>
     </div>
+    <button id="mpPill" class="pill mp-pill" type="button" hidden><span class="dot" aria-hidden="true"></span><span id="mpText">같이 놀기</span></button>
   </div>
   <div class="row">
     <div class="col">
@@ -381,6 +404,7 @@ html, body {
     <h1>띠띠나라<small>3D</small></h1>
     <p>분홍 하늘 아래 꽃이 가득 핀 공원이 입체로 바뀌었어요.<br>토끼 친구들이 한결이를 기다리고 있어요.</p>
     <button id="go" class="big-btn" type="button" disabled>준비하는 중…</button>
+    <button id="mpOpen" class="soft-btn" type="button">가족과 같이 놀기</button>
     <ul class="how">
       <li><span>걸어가기</span>화면을 손가락으로 쭉 끌어요</li>
       <li><span>톡 가기</span>가고 싶은 곳을 톡 눌러요</li>
@@ -389,10 +413,47 @@ html, body {
       <li><span>당근 주기</span>당근밭을 지나가면 당근을 뽑아요. 토끼 옆에서 '당근 주기'를 눌러요</li>
       <li><span>집 구경</span>토끼집 문으로 걸어가면 친구들과 함께 들어가요</li>
       <li><span>상점</span>당근을 팔아 코인을 모으고 캠핑 도구, 집 꾸미기 재료, 크리스마스 장식, 먹을거리를 사요</li>
+      <li><span>같이 놀기</span>'가족과 같이 놀기'를 누르고 같은 방 번호를 넣으면 가족을 만나요</li>
       <li><span>먹기</span>상점의 '먹을거리'에서 산 음식을 '먹기' 버튼으로 냠냠 먹어요</li>
       <li><span>노래</span>오른쪽 위 음표 버튼을 누르면 크리스마스 노래로 바뀌어요. 한 번 더 누르면 띠띠나라 노래로 돌아와요</li>
       <li><span>꾸미기</span>토끼집 안에서 '꾸미기'를 눌러 산 재료를 놓고, 트리에 장식을 달아요</li>
     </ul>
+  </div>
+</div>
+
+<div id="mpSetup" class="overlay" hidden>
+  <div class="card mp-card" role="dialog" aria-modal="true" aria-labelledby="mpTitle">
+    <h2 id="mpTitle">가족과 같이 놀기</h2>
+    <p class="mp-note">같은 방 번호를 넣은 가족끼리 띠띠나라에서 만나요. 무료 공개 서버를 쓰니 진짜 이름 대신 별명을 써 주세요.</p>
+    <label class="mp-field"><span>이름(별명)</span><input id="mpName" type="text" maxlength="6" placeholder="예: 엄마" autocomplete="off"></label>
+    <div class="mp-field"><span>모자</span>
+      <div id="mpHats" class="chips">
+        <button class="chip" type="button" data-v="bunny">토끼 귀</button><button class="chip" type="button" data-v="bear">곰 귀</button><button class="chip" type="button" data-v="cat">고양이 귀</button><button class="chip" type="button" data-v="crown">왕관</button><button class="chip" type="button" data-v="ribbon">리본</button>
+      </div>
+    </div>
+    <div class="mp-field"><span>옷 색깔</span>
+      <div id="mpOutfits" class="chips">
+        <button class="swatch" type="button" data-v="sky" aria-label="하늘색" style="--c:#8ecdf0"></button><button class="swatch" type="button" data-v="pink" aria-label="분홍색" style="--c:#ff9fc4"></button><button class="swatch" type="button" data-v="mint" aria-label="민트색" style="--c:#8fdcc0"></button><button class="swatch" type="button" data-v="lemon" aria-label="노란색" style="--c:#ffd85c"></button><button class="swatch" type="button" data-v="grape" aria-label="보라색" style="--c:#b9a2f0"></button><button class="swatch" type="button" data-v="coral" aria-label="주황색" style="--c:#ff9a7a"></button>
+      </div>
+    </div>
+    <div class="mp-field"><span>키</span>
+      <div id="mpSize" class="chips"><button class="chip" type="button" data-v="small">어린이</button><button class="chip" type="button" data-v="big">어른</button></div>
+    </div>
+    <label class="mp-field"><span>방 번호</span>
+      <span class="code-row"><input id="mpCode" type="text" inputmode="numeric" maxlength="6" placeholder="4자리 숫자" autocomplete="off"><button id="mpNew" class="mini-btn" type="button">새 방 만들기</button></span>
+    </label>
+    <button id="mpGo" class="big-btn" type="button">같이 놀기 시작</button>
+    <button id="mpBack" class="soft-btn" type="button">혼자 놀기로 돌아가기</button>
+  </div>
+</div>
+
+<div id="mpMenu" class="overlay" hidden>
+  <div class="card" role="dialog" aria-modal="true" aria-labelledby="mpMenuTitle">
+    <h2 id="mpMenuTitle">방 <b id="mpMenuCode"></b></h2>
+    <p>가족에게 링크를 보내거나 방 번호를 알려 주면 같이 놀 수 있어요.</p>
+    <button id="mpCopy" class="big-btn" type="button">링크 복사하기</button>
+    <button id="mpLeave" class="soft-btn" type="button">같이 놀기 끝내기</button>
+    <button id="mpMenuClose" class="soft-btn" type="button">닫기</button>
   </div>
 </div>
 
@@ -1341,8 +1402,23 @@ function arrive(){
 }
 /* ================= 한결이 ================= */
 const kid = { x: 0.4, z: 4.6, y: 0, vy: 0, vx: 0, vz: 0, fx: 0, fz: -1, heading: 0, phase: 0, moving: false, waveT: 0, target: null, stuckT: 0, lastD: 0, bubble: null, lockT: 0 };
-const kidM = (() => {
-  const C = { skin: '#ffe1cc', hair: '#5a3a2e', hat: '#ffffff', band: '#ffd1e1', earIn: '#ffc4d8', shirt: '#fff1a6', overall: '#8ecdf0', overallD: '#6fb5de', shoe: '#ff8fb3', eye: '#3d2433', cheek: '#ffb0c4', mouth: '#a0455f', btn: '#fff3a0' };
+// 사람 모습: 모자 모양(ears)과 옷 색(outfit)을 바꿀 수 있어요
+const OUTFITS = {
+  sky: { shirt: '#fff1a6', overall: '#8ecdf0', overallD: '#6fb5de' },
+  pink: { shirt: '#ffffff', overall: '#ff9fc4', overallD: '#f07aa8' },
+  mint: { shirt: '#fff6e0', overall: '#8fdcc0', overallD: '#5fc0a0' },
+  lemon: { shirt: '#ffe0ec', overall: '#ffd85c', overallD: '#f0b830' },
+  grape: { shirt: '#fff1a6', overall: '#b9a2f0', overallD: '#9a80dc' },
+  coral: { shirt: '#e8f6ff', overall: '#ff9a7a', overallD: '#f07a5a' },
+};
+const HAT_TYPES = ['bunny', 'bear', 'cat', 'crown', 'ribbon'];
+function makePerson(look){
+  look = look || {};
+  const O = OUTFITS[look.outfit] || OUTFITS.sky, hatType = HAT_TYPES.includes(look.hat) ? look.hat : 'bunny';
+  const C = Object.assign({ skin: '#ffe1cc', hair: '#5a3a2e', hat: '#ffffff', band: '#ffd1e1', earIn: '#ffc4d8', shirt: '#fff1a6', overall: '#8ecdf0', overallD: '#6fb5de', shoe: '#ff8fb3', eye: '#3d2433', cheek: '#ffb0c4', mouth: '#a0455f', btn: '#fff3a0' }, O);
+  if (hatType === 'bear'){ C.hat = '#c99a74'; C.band = '#e8c9a8'; C.earIn = '#f3d8bd'; }
+  else if (hatType === 'cat'){ C.hat = '#9a9aa8'; C.band = '#d8d8e2'; C.earIn = '#ffc4d8'; }
+  else if (hatType === 'crown' || hatType === 'ribbon'){ C.hat = C.hair; C.band = '#6a4838'; }
   const root = new THREE.Group(), body = new THREE.Group(); root.add(body);
   const legGeo = mergeParts([{ g: new THREE.CylinderGeometry(0.056, 0.05, 0.27, 10), m: M(0, -0.135, 0), c: C.skin }, { g: SPH(0.075), m: M(0, -0.29, 0.035, 0, 0, 0, 1, 0.62, 1.4), c: C.shoe }]);
   const legs = [-0.09, 0.09].map(x => { const p = new THREE.Group(); p.position.set(x, 0.33, 0); const m = new THREE.Mesh(legGeo, VC); m.castShadow = true; p.add(m); root.add(p); return p; });
@@ -1380,11 +1456,26 @@ const kidM = (() => {
     { g: new THREE.TorusGeometry(0.032, 0.009, 6, 12, Math.PI), m: M(0, -0.1, 0.252, 0, 0, Math.PI), c: C.mouth },
   ]), VC);
   hm.castShadow = true; head.add(hm);
-  const earGeo = mergeParts([{ g: SPH(0.075, 12, 10), m: M(0, 0.17, 0, 0, 0, 0, 1, 2.5, 0.55), c: C.hat }, { g: SPH(0.04, 10, 8), m: M(0, 0.16, 0.03, 0, 0, 0, 1, 2.6, 0.3), c: C.earIn }]);
-  const ears = [-0.11, 0.11].map(x => { const p = new THREE.Group(); p.position.set(x, 0.25, -0.02); const m = new THREE.Mesh(earGeo, VC); m.castShadow = true; p.add(m); head.add(p); return p; });
+  let earGeo = null, earX = 0.11, earY = 0.25;
+  if (hatType === 'bunny') earGeo = mergeParts([{ g: SPH(0.075, 12, 10), m: M(0, 0.17, 0, 0, 0, 0, 1, 2.5, 0.55), c: C.hat }, { g: SPH(0.04, 10, 8), m: M(0, 0.16, 0.03, 0, 0, 0, 1, 2.6, 0.3), c: C.earIn }]);
+  else if (hatType === 'bear'){ earGeo = mergeParts([{ g: SPH(0.085, 12, 10), m: M(0, 0.04, 0, 0, 0, 0, 1, 1, 0.6), c: C.hat }, { g: SPH(0.05, 10, 8), m: M(0, 0.04, 0.03, 0, 0, 0, 1, 1, 0.4), c: C.earIn }]); earX = 0.19; earY = 0.2; }
+  else if (hatType === 'cat'){ earGeo = mergeParts([{ g: new THREE.ConeGeometry(0.085, 0.17, 4), m: M(0, 0.07, 0, 0, Math.PI / 4, 0, 1, 1, 0.55), c: C.hat }, { g: new THREE.ConeGeometry(0.045, 0.1, 4), m: M(0, 0.055, 0.03, 0, Math.PI / 4, 0, 1, 1, 0.4), c: C.earIn }]); earX = 0.15; earY = 0.23; }
+  const ears = [-earX, earX].map(x => { const p = new THREE.Group(); p.position.set(x, earY, -0.02); if (earGeo){ const m = new THREE.Mesh(earGeo, VC); m.castShadow = true; p.add(m); } head.add(p); return p; });
+  if (hatType === 'crown'){
+    const parts = [{ g: new THREE.CylinderGeometry(0.15, 0.16, 0.08, 16, 1, true), m: M(0, 0.32, 0), c: '#ffcd45' }];
+    for (let k = 0; k < 6; k++){ const a = k / 6 * TAU; parts.push({ g: new THREE.ConeGeometry(0.035, 0.09, 6), m: M(Math.sin(a) * 0.145, 0.4, Math.cos(a) * 0.145), c: '#ffcd45' }, { g: SPH(0.02, 6, 4), m: M(Math.sin(a) * 0.145, 0.45, Math.cos(a) * 0.145), c: ['#ff4f6d', '#74c4ff', '#9ff09a'][k % 3] }); }
+    const cr = new THREE.Mesh(mergeParts(parts), VC); cr.castShadow = true; head.add(cr);
+  } else if (hatType === 'ribbon'){
+    const rb = new THREE.Mesh(mergeParts([
+      { g: SPH(0.08, 10, 8), m: M(-0.08, 0.3, 0.06, 0, 0, 0.5, 1.3, 0.8, 0.45), c: '#ff6b9c' }, { g: SPH(0.08, 10, 8), m: M(0.08, 0.3, 0.06, 0, 0, -0.5, 1.3, 0.8, 0.45), c: '#ff6b9c' },
+      { g: SPH(0.04, 8, 6), m: M(0, 0.29, 0.08), c: '#e8487a' }]), VC);
+    rb.rotation.z = 0.35; rb.position.x = 0.06; rb.castShadow = true; head.add(rb);
+  }
+  if (look.big) root.scale.setScalar(1.22);
   scene.add(root);
-  return { root, body, legs, arms, head, ears, handCarrot };
-})();
+  return { root, body, legs, arms, head, ears, handCarrot, hatType };
+}
+const kidM = makePerson();
 
 /* ================= 토끼 ================= */
 const NAMES = ['몽실이', '솜사탕', '콩이', '보리', '마시멜로', '초코', '뭉치', '구름이', '딸기', '복실이', '토토', '루루', '방울이', '꼬미', '쿠키', '모찌', '하양이', '단추', '별이', '사랑이', '호두', '밤톨이', '우유', '젤리'];
@@ -2906,6 +2997,225 @@ goBtn.addEventListener('click', () => {
   setTimeout(() => toast('화면을 끌거나 톡 눌러서 걸어요. 왼쪽 아래 화살표로 둘러볼 수 있어요', 4400), 900);
 });
 
+/* ================= 가족과 같이 놀기 (무료 공개 중계 서버) ================= */
+const MP = {
+  brokers: ['wss://broker.emqx.io:8084/mqtt', 'wss://broker.hivemq.com:8884/mqtt'],
+  libs: ['https://unpkg.com/mqtt@5/dist/mqtt.min.js', 'https://cdn.jsdelivr.net/npm/mqtt@5/dist/mqtt.min.js'],
+  client: null, code: '', on: false, connected: false, id: 'p' + Math.random().toString(36).slice(2, 10),
+  peers: new Map(), lastSend: 0, lastSig: '', brokerIdx: 0, failT: null,
+};
+const OUTFIT_KEYS = Object.keys(OUTFITS);
+let myLook = { hat: 'bunny', outfit: 'sky', big: false }, myName = KID;
+try {
+  const saved = JSON.parse(localStorage.getItem('ttitti-me') || 'null');
+  if (saved){ if (HAT_TYPES.includes(saved.hat)) myLook.hat = saved.hat; if (OUTFITS[saved.outfit]) myLook.outfit = saved.outfit; myLook.big = !!saved.big; if (typeof saved.name === 'string' && saved.name.trim()) myName = saved.name.trim().slice(0, 6); }
+} catch (e) {}
+const cleanName = t => String(t || '').replace(/[\u0000-\u001f<>]/g, '').trim().slice(0, 6);
+function setMyLook(look){
+  scene.remove(kidM.root);
+  const n = makePerson(look); Object.assign(kidM, n);
+  kidM.arms[1].add(handFood);
+  kidM.root.position.set(kid.x, kid.y, kid.z); kidM.root.rotation.y = kid.heading;
+}
+function loadScript(urls){
+  return new Promise((res, rej) => {
+    const tryAt = i => {
+      if (window.mqtt) return res(window.mqtt);
+      if (i >= urls.length) return rej(new Error('lib'));
+      const sc = document.createElement('script'); sc.src = urls[i]; sc.async = true;
+      sc.onload = () => window.mqtt ? res(window.mqtt) : tryAt(i + 1);
+      sc.onerror = () => tryAt(i + 1);
+      document.head.appendChild(sc);
+    };
+    tryAt(0);
+  });
+}
+const mpPill = document.getElementById('mpPill'), mpText = document.getElementById('mpText');
+function updateMpPill(){
+  mpPill.hidden = !MP.on;
+  if (!MP.on) return;
+  const n = 1 + [...MP.peers.values()].length;
+  mpPill.classList.toggle('off', !MP.connected);
+  mpText.textContent = MP.connected ? `방 ${MP.code} · 함께 ${n}명` : `방 ${MP.code} · 연결하는 중…`;
+}
+async function mpStart(code){
+  MP.code = code; MP.on = true; updateMpPill();
+  try { await loadScript(MP.libs); }
+  catch (e){ toast('같이 놀기 프로그램을 불러오지 못했어요. 인터넷 연결을 확인해 주세요', 4000); MP.on = false; updateMpPill(); return; }
+  mpConnect();
+}
+function mpConnect(){
+  if (MP.client){ try { MP.client.end(true); } catch (e) {} MP.client = null; }
+  const base = `ttitti-nara/v1/room/${MP.code}`;
+  let client;
+  try {
+    client = window.mqtt.connect(MP.brokers[MP.brokerIdx], {
+      clientId: 'ttitti_' + MP.id + '_' + Math.random().toString(36).slice(2, 6), clean: true, connectTimeout: 8000, reconnectPeriod: 4000, keepalive: 30,
+      will: { topic: base + '/bye', payload: JSON.stringify({ id: MP.id }), qos: 0, retain: false },
+    });
+  } catch (e){ mpNextBroker(); return; }
+  MP.client = client;
+  clearTimeout(MP.failT);
+  MP.failT = setTimeout(() => { if (!MP.connected && MP.client === client) mpNextBroker(); }, 12000);
+  client.on('connect', () => {
+    if (MP.client !== client) return;
+    MP.connected = true; clearTimeout(MP.failT); updateMpPill();
+    client.subscribe(base + '/#', { qos: 0 });
+    MP.lastSig = ''; mpSend(true);
+    if (!MP.greeted){ MP.greeted = true; toast(`방 ${MP.code}에 들어왔어요! 같은 방 번호의 가족을 기다려요`, 3600); }
+  });
+  client.on('close', () => { if (MP.client === client){ MP.connected = false; updateMpPill(); } });
+  client.on('offline', () => { if (MP.client === client){ MP.connected = false; updateMpPill(); } });
+  client.on('message', (topic, payload) => {
+    if (MP.client !== client) return;
+    let d; try { d = JSON.parse(payload.toString()); } catch (e) { return; }
+    if (!d || typeof d.id !== 'string' || d.id === MP.id) return;
+    if (topic.endsWith('/bye')) mpRemove(d.id, true);
+    else if (topic.endsWith('/s')) mpOnState(d);
+  });
+}
+function mpNextBroker(){
+  if (!MP.on) return;
+  MP.brokerIdx = (MP.brokerIdx + 1) % MP.brokers.length;
+  if (MP.brokerIdx === 0 && !MP.warned){ MP.warned = true; toast('같이 놀기 서버에 연결이 잘 안 돼요. 잠시 뒤에 다시 시도할게요', 4000); }
+  mpConnect();
+}
+function mpStop(){
+  if (MP.client){ try { MP.client.publish(`ttitti-nara/v1/room/${MP.code}/bye`, JSON.stringify({ id: MP.id })); MP.client.end(); } catch (e) {} }
+  MP.client = null; MP.on = false; MP.connected = false; MP.greeted = false; clearTimeout(MP.failT);
+  for (const id of [...MP.peers.keys()]) mpRemove(id, false);
+  updateMpPill();
+}
+const num = (v, lo, hi, d) => { v = Number(v); return Number.isFinite(v) ? clamp(v, lo, hi) : d; };
+function mpOnState(d){
+  const look = { hat: HAT_TYPES.includes(d.lh) ? d.lh : 'bunny', outfit: OUTFITS[d.lo] ? d.lo : 'sky', big: !!d.lb };
+  const name = cleanName(d.n) || '친구';
+  let p = MP.peers.get(d.id);
+  const lookKey = look.hat + look.outfit + (look.big ? 1 : 0);
+  if (!p){
+    p = { id: d.id, name, lookKey, m: makePerson(look), x: num(d.x, -60, 60, 0), z: num(d.z, -60, 60, 0), heading: 0, phase: 0, tx: 0, tz: 0, ty: 0, y: 0 };
+    p.m.root.position.set(p.x, 0, p.z);
+    MP.peers.set(d.id, p);
+    toast(`${name}${hasBatchim(name) ? '이' : '가'} 들어왔어요!`, 3000); sfx.chime();
+  } else if (p.lookKey !== lookKey){
+    scene.remove(p.m.root); p.m = makePerson(look); p.lookKey = lookKey;
+  }
+  p.name = name;
+  p.tx = num(d.x, -60, 60, p.x); p.tz = num(d.z, -60, 60, p.z); p.ty = num(d.y, 0, 4, 0);
+  p.th = num(d.h, -10, 10, 0); p.mv = !!d.mv; p.wave = !!d.w; p.sit = !!d.st;
+  p.place = d.p === 'room' ? 'room' : 'park'; p.room = Math.round(num(d.r, -1, 9, -1));
+  p.bubble = typeof d.b === 'string' ? d.b.replace(/[\u0000-\u001f<>]/g, '').slice(0, 24) : '';
+  p.eat = FOODS.some(f => f.id === d.e) ? d.e : '';
+  p.seen = performance.now();
+  updateMpPill();
+}
+function mpRemove(id, notify){
+  const p = MP.peers.get(id); if (!p) return;
+  scene.remove(p.m.root); MP.peers.delete(id); peerFood.delete(id);
+  if (notify) toast(`${p.name}${hasBatchim(p.name) ? '이' : '가'} 나갔어요`);
+  updateMpPill();
+}
+function mpSend(force){
+  if (!MP.on || !MP.connected || !MP.client) return;
+  const now = performance.now();
+  const st = {
+    id: MP.id, n: myName, lh: myLook.hat, lo: myLook.outfit, lb: myLook.big ? 1 : 0,
+    p: place, r: place === 'room' ? roomIdx : -1,
+    x: Math.round(kid.x * 100) / 100, z: Math.round(kid.z * 100) / 100, y: Math.round(kid.y * 100) / 100, h: Math.round(kid.heading * 100) / 100,
+    mv: kid.moving ? 1 : 0, w: kid.waveT > 0 ? 1 : 0, st: kid.sitting ? 1 : 0, b: kid.bubble ? kid.bubble.text : '', e: kid.eat ? kid.eat.id : '',
+  };
+  const sig = JSON.stringify(st);
+  if (!force && sig === MP.lastSig && now - MP.lastSend < 1500) return;
+  if (!force && now - MP.lastSend < 120) return;
+  MP.lastSig = sig; MP.lastSend = now;
+  try { MP.client.publish(`ttitti-nara/v1/room/${MP.code}/s`, sig, { qos: 0 }); } catch (e) {}
+}
+const peerFood = new Map();
+function updatePeers(dt){
+  if (!MP.on) return;
+  mpSend(false);
+  const now = performance.now(), a = 1 - Math.exp(-dt * 9);
+  for (const p of [...MP.peers.values()]){
+    if (now - p.seen > 7000){ mpRemove(p.id, true); continue; }
+    const vis = p.place === place && (place === 'park' || p.room === roomIdx);
+    const m = p.m; m.root.visible = vis;
+    if (!vis) continue;
+    const jump = Math.hypot(p.tx - p.x, p.tz - p.z) > 4;
+    p.x = jump ? p.tx : lerp(p.x, p.tx, a); p.z = jump ? p.tz : lerp(p.z, p.tz, a); p.y = lerp(p.y, p.ty, Math.min(1, a * 1.6));
+    p.heading = lerpAngle(p.heading, p.th, 1 - Math.exp(-dt * 12));
+    if (p.mv) p.phase += dt * 9;
+    const sw = p.mv ? Math.sin(p.phase) : 0;
+    m.root.position.set(p.x, p.y + (p.sit ? 0.12 : 0), p.z); m.root.rotation.y = p.heading;
+    m.body.position.y = p.mv ? Math.abs(Math.cos(p.phase)) * 0.035 : Math.sin(T * 2.2 + p.x) * 0.006;
+    m.legs[0].rotation.x = p.sit ? -1.45 : sw * 0.6; m.legs[1].rotation.x = p.sit ? -1.45 : -sw * 0.6;
+    m.arms[0].rotation.x = -sw * 0.5; m.arms[0].rotation.z = -0.12;
+    if (p.wave){ m.arms[1].rotation.x = 0; m.arms[1].rotation.z = 2.6 + Math.sin(T * 16) * 0.3; }
+    else if (p.eat){ m.arms[1].rotation.x = -2.05 - Math.max(0, Math.sin(T * 6.5)) * 0.25; m.arms[1].rotation.z = 0.28; }
+    else { m.arms[1].rotation.x = sw * 0.5; m.arms[1].rotation.z = 0.12; }
+    const ew = Math.sin(T * 3 + p.z) * 0.05 + (p.mv ? Math.sin(p.phase * 2) * 0.1 : 0);
+    m.ears[0].rotation.z = 0.24 + ew; m.ears[1].rotation.z = -0.24 - ew;
+    let f = peerFood.get(p.id);
+    if (p.eat){
+      if (!f){ f = new THREE.Mesh(foodGeo(p.eat), VC); f.position.set(0, -0.31, 0.07); m.arms[1].add(f); peerFood.set(p.id, f); }
+      if (f.parent !== m.arms[1]) m.arms[1].add(f);
+      f.geometry = foodGeo(p.eat); f.rotation.x = -m.arms[1].rotation.x - 0.3; f.visible = true;
+    } else if (f) f.visible = false;
+  }
+}
+function drawPeerTags(){
+  if (!MP.on) return;
+  for (const p of MP.peers.values()){
+    if (!p.m.root.visible) continue;
+    const q = toScreen(p.x, p.y + 1.42 * (p.lookKey.endsWith('1') ? 1.22 : 1), p.z);
+    if (!q || q.d > 30) continue;
+    if (p.bubble) drawBubble(q.x, q.y - 4, p.bubble, 1, '#9fd3ff');
+    else drawTag(q.x, q.y - 2, p.name, 'rgba(124,196,255,0.95)', '#fff');
+  }
+}
+// ---- 같이 놀기 화면
+const mpEl = document.getElementById('mpSetup'), mpCodeIn = document.getElementById('mpCode'), mpNameIn = document.getElementById('mpName');
+function renderMpChoices(){
+  document.querySelectorAll('#mpHats .chip').forEach(b => { const on = b.dataset.v === myLook.hat; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); });
+  document.querySelectorAll('#mpOutfits .swatch').forEach(b => { const on = b.dataset.v === myLook.outfit; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); });
+  document.querySelectorAll('#mpSize .chip').forEach(b => { const on = (b.dataset.v === 'big') === myLook.big; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); });
+}
+function openMpSetup(){
+  mpNameIn.value = myName === KID && !localStorage.getItem('ttitti-me') ? '' : myName;
+  if (!mpCodeIn.value) mpCodeIn.value = (new URLSearchParams(location.search).get('room') || '').replace(/\D/g, '').slice(0, 6);
+  renderMpChoices(); mpEl.hidden = false;
+}
+document.getElementById('mpOpen').addEventListener('click', () => { initAudio(); sfx.tap(); openMpSetup(); });
+document.getElementById('mpBack').addEventListener('click', () => { sfx.tap(); mpEl.hidden = true; });
+document.getElementById('mpNew').addEventListener('click', () => { sfx.tap(); mpCodeIn.value = String(1000 + Math.floor(Math.random() * 9000)); });
+document.querySelectorAll('#mpHats .chip').forEach(b => b.addEventListener('click', () => { sfx.tap(); myLook.hat = b.dataset.v; renderMpChoices(); }));
+document.querySelectorAll('#mpOutfits .swatch').forEach(b => b.addEventListener('click', () => { sfx.tap(); myLook.outfit = b.dataset.v; renderMpChoices(); }));
+document.querySelectorAll('#mpSize .chip').forEach(b => b.addEventListener('click', () => { sfx.tap(); myLook.big = b.dataset.v === 'big'; renderMpChoices(); }));
+document.getElementById('mpGo').addEventListener('click', () => {
+  const code = mpCodeIn.value.replace(/\D/g, '').slice(0, 6), name = cleanName(mpNameIn.value);
+  if (!name){ mpNameIn.focus(); toast('이름(별명)을 써 주세요'); return; }
+  if (code.length < 4){ mpCodeIn.focus(); toast("방 번호 4자리를 넣거나 '새 방 만들기'를 눌러 주세요"); return; }
+  myName = name;
+  try { localStorage.setItem('ttitti-me', JSON.stringify({ name, hat: myLook.hat, outfit: myLook.outfit, big: myLook.big })); } catch (e) {}
+  setMyLook(myLook);
+  mpEl.hidden = true;
+  try { history.replaceState(null, '', location.pathname + '?room=' + code); } catch (e) {}
+  goBtn.click();
+  mpStart(code);
+});
+const mpMenu = document.getElementById('mpMenu');
+mpPill.addEventListener('click', () => { sfx.tap(); document.getElementById('mpMenuCode').textContent = MP.code; mpMenu.hidden = false; });
+document.getElementById('mpMenuClose').addEventListener('click', () => { sfx.tap(); mpMenu.hidden = true; });
+document.getElementById('mpCopy').addEventListener('click', async () => {
+  const url = location.origin + location.pathname + '?room=' + MP.code;
+  try { await navigator.clipboard.writeText(url); toast('링크를 복사했어요! 가족에게 보내 주세요'); }
+  catch (e){ toast(`가족에게 이 주소를 보내 주세요: ${url}`, 6000); }
+});
+document.getElementById('mpLeave').addEventListener('click', () => { sfx.tap(); mpStop(); mpMenu.hidden = true; toast('같이 놀기를 마쳤어요'); });
+if (new URLSearchParams(location.search).get('room')) setTimeout(() => { if (!started) openMpSetup(); }, 300);
+setInterval(() => { if (MP.on) mpSend(false); }, 1000);
+window.addEventListener('pagehide', () => { if (MP.on && MP.client){ try { MP.client.publish(`ttitti-nara/v1/room/${MP.code}/bye`, JSON.stringify({ id: MP.id })); } catch (e) {} } });
+if (myName !== KID || myLook.hat !== 'bunny' || myLook.outfit !== 'sky' || myLook.big) setMyLook(myLook);
+
 /* ================= 카메라 ================= */
 let camYaw = 0, camYawT = 0, camRot = 0;
 const CAM_DIST = 7.4, CAM_PITCH = 0.36;
@@ -3023,6 +3333,8 @@ function handleTap(sx, sy){
 const keys = {};
 window.addEventListener('keydown', e => {
   const k = e.key;
+  if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
+  if (!mpEl.hidden || !mpMenu.hidden) return;
   if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(k)) e.preventDefault();
   if (!started){ if ((k === 'Enter' || k === ' ') && !goBtn.disabled) goBtn.click(); return; }
   if (shopOpen){ if (k === 'Escape') closeShop(); return; }
@@ -3210,6 +3522,7 @@ function updateTreeOcclusion(){
 }
 function update(dt){
   updateKid(dt);
+  updatePeers(dt);
   updateCarrots(dt);
   updateRoom(dt);
   updateCamp(dt);
@@ -3332,9 +3645,10 @@ function drawOverlay(){
     if (r.bubble) drawBubble(q.x, q.y - 4, r.bubble.text, clamp(r.bubble.t * 3, 0, 1));
     else if (r.met && q.d < 13 && !(kd && q.d < kd - 1.2)) drawTag(q.x, q.y - 2, r.name, 'rgba(255,127,174,0.92)', '#fff', r.happy);
   }
+  drawPeerTags();
   if (kq){
     if (kid.bubble) drawBubble(kq.x, kq.y - 4, kid.bubble.text, clamp(kid.bubble.t * 3, 0, 1), '#ffcb5c');
-    else drawTag(kq.x, kq.y - 2, KID, 'rgba(255,203,92,0.95)', '#6b3a20');
+    else drawTag(kq.x, kq.y - 2, myName, 'rgba(255,203,92,0.95)', '#6b3a20');
   }
   // 조이스틱
   if (joy.active && joy.moved){
